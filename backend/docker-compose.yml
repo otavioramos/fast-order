@@ -1,0 +1,32 @@
+version: "3"
+services:
+  backend:
+    build: .
+    container_name: fast_order_backend
+    environment:
+      JDBC_URL: jdbc:postgresql://postgres/fastorder
+      DATABASE_USERNAME: fastorder
+      DATABASE_PASSWORD: password5786
+      DATABASE_DRIVER_CLASS_NAME: org.postgresql.Driver
+    ports:
+      - "8083:8083"
+    networks:
+      - fast-order
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: fastorder
+      POSTGRES_PASSWORD: password5786
+    volumes:
+      - /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - fast-order
+
+networks:
+  fast-order:
+    driver: bridge
