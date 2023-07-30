@@ -1,5 +1,7 @@
 package br.com.otavio.fastorder.model.entity;
 
+import br.com.otavio.fastorder.model.entity.enums.OrderPaymentMethod;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -19,7 +21,7 @@ public class OrderPayment {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_payment_sq")
-	@SequenceGenerator(name = "order_payment_sq", sequenceName = "order_payment_sequence", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "order_payment_sq", sequenceName = "fast_order.order_payment_sequence", allocationSize = 1)
 	private Integer id;
 	
 	@Enumerated(EnumType.STRING)

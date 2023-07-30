@@ -1,19 +1,9 @@
 package br.com.otavio.fastorder.model.entity;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity(name = "order")
 @Table(name = "order", schema = "fast_order")
@@ -21,21 +11,21 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_sq")
-    @SequenceGenerator(name = "order_sq", sequenceName = "order_sequence", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "order_sq", sequenceName = "fast_order.order_sequence", allocationSize = 1)
     private Integer id;
 
     @Column(name = "creation_time",  nullable = false)
     private LocalDateTime creationTime;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_payment_id", referencedColumnName = "id", nullable = false)
     private OrderPayment payment;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_status_id", referencedColumnName = "id", nullable = false)
     private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
 
 	public Order(Integer id, LocalDateTime creationTime, OrderPayment payment, OrderStatus orderStatus,

@@ -1,17 +1,10 @@
 package br.com.otavio.fastorder.model.entity;
 
+import br.com.otavio.fastorder.model.entity.enums.OrderStatusDescription;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 @Entity(name = "orderStatus")
 @Table(name = "order_status", schema = "fast_order")
@@ -19,7 +12,7 @@ public class OrderStatus {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_status_sq")
-	@SequenceGenerator(name = "order_status_sq", sequenceName = "order_status_sequence", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "order_status_sq", sequenceName = "fast_order.order_status_sequence", allocationSize = 1)
 	private Integer id;
 	
 	@Enumerated(EnumType.STRING)

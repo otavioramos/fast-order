@@ -1,5 +1,7 @@
 package br.com.otavio.fastorder.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -11,13 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity(name = "orderProduct")
 @Table(name = "order_product", schema = "fast_order")
 public class OrderProduct {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_product_sq")
-	@SequenceGenerator(name = "order_product_sq", sequenceName = "order_product_sequence", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "order_product_sq", sequenceName = "fast_order.order_product_sequence", allocationSize = 1)
 	private Integer id;
 	
 	@Column(name = "name", nullable = false)

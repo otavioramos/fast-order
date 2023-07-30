@@ -1,17 +1,11 @@
 package br.com.otavio.fastorder.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.math.BigDecimal;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name = "orderItem")
 @Table(name = "order_item", schema = "fast_order")
@@ -19,14 +13,15 @@ public class OrderItem {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_item_sq")
-	@SequenceGenerator(name = "order_item_sq", sequenceName = "order_item_sequence", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "order_item_sq", sequenceName = "fast_order.order_item_sequence", allocationSize = 1)
 	private Integer id;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_product_id", referencedColumnName = "id", nullable = false)
 	private OrderProduct product;
 
-	@ManyToOne
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id", nullable = false)
 	private Order order;
 	
@@ -66,6 +61,18 @@ public class OrderItem {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public BigDecimal getTotal() {
+		return this.product.getPrice().multiply(BigDecimal.valueOf(quantity));
 	}
 
 	@Override
