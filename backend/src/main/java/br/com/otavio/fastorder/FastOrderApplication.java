@@ -1,12 +1,12 @@
-package br.com.otavio.fastorderbackend;
+package br.com.otavio.fastorder;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FastOrderBackendApplication {
+public class FastOrderApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FastOrderBackendApplication.class, args);
+		SpringApplication.run(FastOrderApplication.class, args);
 	}
 }
