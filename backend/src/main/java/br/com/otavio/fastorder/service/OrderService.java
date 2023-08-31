@@ -15,12 +15,14 @@ public class OrderService {
 
 	private final OrderRepository repository;
 	private final OrderItemService orderItemService;
+	private final OrderStatusService orderStatusService;
 	private static final OrderMapper ORDER_MAPPER = new OrderMapper();
 
-	public OrderService(OrderRepository repository, OrderItemService orderItemService) {
+	public OrderService(OrderRepository repository, OrderItemService orderItemService, OrderStatusService orderStatusService) {
 		super();
 		this.repository = repository;
 		this.orderItemService = orderItemService;
+		this.orderStatusService = orderStatusService;
 	}
 	
 	public Order save(OrderRecordDTO orderDTO) {
@@ -29,16 +31,11 @@ public class OrderService {
 		order.setItems(items);
 		items.forEach(item -> item.setOrder(order));
 
-		BigDecimal total = order.getItems().stream()
-				.map(OrderItem::getTotal)
-				.reduce(BigDecimal.valueOf(0), BigDecimal::add);
+		BigDecimal total = this.orderItemService.getTotal(order.getItems());
 		order.getPayment().setTotal(total);
 
-		Integer maxMinutesToPrepare = order.getItems().stream()
-				.map(item -> item.getProduct().getMaximumPreparationTimeInMinutes() * item.getQuantity())
-				.max(Integer::compareTo)
-				.orElseThrow(() -> new RuntimeException("Nao foi possivel obter o tempo maximo de preparacao em minutos"));
-		order.getOrderStatus().setDeadline(order.getCreationTime().plusMinutes(maxMinutesToPrepare));
+		Integer totalMinutesToPrepare = this.orderStatusService.getTotalMinutesToPrepare(order.getItems());
+		order.getOrderStatus().setDeadline(order.getCreationTime().plusMinutes(totalMinutesToPrepare));
 
 		return repository.save(order);
 	}

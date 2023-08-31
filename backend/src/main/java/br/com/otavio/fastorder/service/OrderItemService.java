@@ -4,6 +4,7 @@ import br.com.otavio.fastorder.model.dto.OrderItemRecordDTO;
 import br.com.otavio.fastorder.model.entity.OrderItem;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,5 +28,11 @@ public class OrderItemService {
         });
 
         return items;
+    }
+
+    public BigDecimal getTotal(List<OrderItem> items) {
+        return items.stream()
+                .map(OrderItem::getTotal)
+                .reduce(BigDecimal.valueOf(0), BigDecimal::add);
     }
 }
