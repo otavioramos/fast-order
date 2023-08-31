@@ -35,7 +35,7 @@ public class OrderService {
 		order.getPayment().setTotal(total);
 
 		Integer maxMinutesToPrepare = order.getItems().stream()
-				.map(item -> item.getProduct().getMaximumPreparationTimeInMinutes())
+				.map(item -> item.getProduct().getMaximumPreparationTimeInMinutes() * item.getQuantity())
 				.max(Integer::compareTo)
 				.orElseThrow(() -> new RuntimeException("Nao foi possivel obter o tempo maximo de preparacao em minutos"));
 		order.getOrderStatus().setDeadline(order.getCreationTime().plusMinutes(maxMinutesToPrepare));
