@@ -23,6 +23,7 @@ public class OrderTicket {
     @OneToOne(mappedBy = "orderTicket", cascade = CascadeType.ALL)
     @JsonIgnore
     private Order order;
+
     public OrderTicket(Integer id, Integer ticketNumber, LocalDateTime issueTime, LocalDateTime expirationTime, Order order) {
         this.id = id;
         this.ticketNumber = ticketNumber;
