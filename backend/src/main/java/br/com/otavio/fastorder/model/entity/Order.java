@@ -28,6 +28,10 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "order_ticket_id", referencedColumnName = "id", nullable = false)
+	private OrderTicket orderTicket;
+
 	public Order(Integer id, LocalDateTime creationTime, OrderPayment payment, OrderStatus orderStatus,
 			List<OrderItem> items) {
 		super();
@@ -82,28 +86,36 @@ public class Order {
 		this.items = items;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(creationTime, id, items, orderStatus, payment);
+	public OrderTicket getOrderTicket() {
+		return orderTicket;
+	}
+
+	public void setOrderTicket(OrderTicket orderTicket) {
+		this.orderTicket = orderTicket;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Order other = (Order) obj;
-		return Objects.equals(creationTime, other.creationTime) && Objects.equals(id, other.id)
-				&& Objects.equals(items, other.items) && Objects.equals(orderStatus, other.orderStatus)
-				&& Objects.equals(payment, other.payment);
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Order order = (Order) o;
+		return Objects.equals(id, order.id) && Objects.equals(creationTime, order.creationTime) && Objects.equals(payment, order.payment) && Objects.equals(orderStatus, order.orderStatus) && Objects.equals(items, order.items) && Objects.equals(orderTicket, order.orderTicket);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, creationTime, payment, orderStatus, items, orderTicket);
 	}
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", creationTime=" + creationTime + ", payment=" + payment + ", orderStatus="
-				+ orderStatus + ", items=" + items + "]";
+		return "Order{" +
+				"id=" + id +
+				", creationTime=" + creationTime +
+				", payment=" + payment +
+				", orderStatus=" + orderStatus +
+				", items=" + items +
+				", orderTicket=" + orderTicket +
+				'}';
 	}
 }
