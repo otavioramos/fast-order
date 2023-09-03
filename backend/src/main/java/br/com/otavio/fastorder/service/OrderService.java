@@ -1,7 +1,7 @@
 package br.com.otavio.fastorder.service;
 
 import br.com.otavio.fastorder.model.mapper.OrderMapper;
-import br.com.otavio.fastorder.model.dto.OrderRecordDTO;
+import br.com.otavio.fastorder.model.dto.CreateOrderDTO;
 import br.com.otavio.fastorder.model.entity.Order;
 import br.com.otavio.fastorder.model.entity.OrderItem;
 import br.com.otavio.fastorder.repository.OrderRepository;
@@ -25,7 +25,7 @@ public class OrderService {
 		this.orderStatusService = orderStatusService;
 	}
 	
-	public Order save(OrderRecordDTO orderDTO) {
+	public Order save(CreateOrderDTO orderDTO) {
 		var order = ORDER_MAPPER.apply(orderDTO);
 		List<OrderItem> items = orderItemService.loadItems(orderDTO.items());
 		order.setItems(items);

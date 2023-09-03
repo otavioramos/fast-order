@@ -1,6 +1,6 @@
 package br.com.otavio.fastorder.controller;
 
-import br.com.otavio.fastorder.model.dto.OrderRecordDTO;
+import br.com.otavio.fastorder.model.dto.CreateOrderDTO;
 import br.com.otavio.fastorder.model.entity.Order;
 import br.com.otavio.fastorder.service.OrderService;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class OrderController {
 	}
 
 	@PostMapping
-	public Order save(@RequestBody OrderRecordDTO orderDTO) {
+	public Order save(@RequestBody CreateOrderDTO orderDTO) {
 		return service.save(orderDTO);
 	}
 
