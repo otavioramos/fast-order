@@ -22,7 +22,8 @@ public class OrderProductService {
 	}
 
 	public OrderProduct getById(Integer id) {
-		return repository.getReferenceById(id);
+		return repository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Produto nao encontrado"));
 	}
 
 	public List<OrderProduct> getAll() {
