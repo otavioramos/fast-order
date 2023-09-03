@@ -20,7 +20,7 @@ public class OrderItemService {
     public List<OrderItem> loadItems(List<OrderItemRecordDTO> itemsDTOs) {
         List<OrderItem> items = new ArrayList<>();
         itemsDTOs.forEach(item -> {
-            var orderProduct = orderProductService.load(item.productId());
+            var orderProduct = orderProductService.getById(item.productId());
             var orderItem = new OrderItem();
             orderItem.setQuantity(item.quantity());
             orderItem.setProduct(orderProduct);
