@@ -1,4 +1,4 @@
-package br.com.otavio.fastorder.controller.mapper;
+package br.com.otavio.fastorder.model.mapper;
 
 import br.com.otavio.fastorder.model.dto.OrderRecordDTO;
 import br.com.otavio.fastorder.model.entity.Order;
