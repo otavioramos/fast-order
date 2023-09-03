@@ -43,4 +43,9 @@ public class OrderService {
 	public List<Order> getAll() {
 		return repository.findAll();
 	}
+
+	public Order getById(Integer id) {
+		return repository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Pedido nao encontrado"));
+	}
 }
