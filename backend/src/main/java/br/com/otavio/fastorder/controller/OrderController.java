@@ -3,6 +3,7 @@ package br.com.otavio.fastorder.controller;
 import br.com.otavio.fastorder.model.dto.CreateOrderDTO;
 import br.com.otavio.fastorder.model.dto.UpdateOrderDTO;
 import br.com.otavio.fastorder.model.entity.Order;
+import br.com.otavio.fastorder.model.entity.OrderPayment;
 import br.com.otavio.fastorder.model.entity.OrderStatus;
 import br.com.otavio.fastorder.service.OrderService;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +35,14 @@ public class OrderController {
 		return service.getById(id);
 	}
 
-	@GetMapping("{id}/status")
+	@GetMapping("/{id}/status")
 	public OrderStatus getStatusById(@PathVariable Integer id) {
 		return service.getById(id).getOrderStatus();
+	}
+
+	@GetMapping("/{id}/payment")
+	public OrderPayment getPaymentById(@PathVariable Integer id) {
+		return service.getById(id).getPayment();
 	}
 
 	@PutMapping("/{id}")
