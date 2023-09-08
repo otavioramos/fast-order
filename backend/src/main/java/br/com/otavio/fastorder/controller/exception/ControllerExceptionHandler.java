@@ -19,14 +19,14 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(ProductNotFound.class)
-    public ResponseEntity<ExceptionDTO> orderNotFound(ProductNotFound exception) {
+    public ResponseEntity<ExceptionDTO> productNotFound(ProductNotFound exception) {
         ExceptionDTO exceptionDTO = new ExceptionDTO(exception.getMessage(), HttpStatus.NOT_FOUND.value());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionDTO);
     }
 
     @ExceptionHandler(PreparationTimeException.class)
-    public ResponseEntity<ExceptionDTO> orderNotFound(PreparationTimeException exception) {
-        ExceptionDTO exceptionDTO = new ExceptionDTO(exception.getMessage(), 404);
+    public ResponseEntity<ExceptionDTO> preparationTimeException(PreparationTimeException exception) {
+        ExceptionDTO exceptionDTO = new ExceptionDTO(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exceptionDTO);
     }
 
