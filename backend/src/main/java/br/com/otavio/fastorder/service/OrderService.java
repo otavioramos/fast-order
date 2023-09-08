@@ -6,6 +6,7 @@ import br.com.otavio.fastorder.model.entity.Order;
 import br.com.otavio.fastorder.model.entity.OrderItem;
 import br.com.otavio.fastorder.model.entity.OrderTicket;
 import br.com.otavio.fastorder.model.entity.enums.OrderStatusDescription;
+import br.com.otavio.fastorder.model.exception.OrderNotFound;
 import br.com.otavio.fastorder.model.mapper.OrderMapper;
 import br.com.otavio.fastorder.repository.OrderRepository;
 import org.springframework.stereotype.Service;
@@ -57,12 +58,12 @@ public class OrderService {
 
 	public Order getById(Integer id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Pedido nao encontrado"));
+				.orElseThrow(() -> new OrderNotFound("Pedido nao encontrado pelo id " + id));
 	}
 
 	public Order getByTicket(Integer ticketId) {
 		return repository.getOrderByTicketId(ticketId)
-				.orElseThrow(() -> new RuntimeException("Pedido nao encontrado"));
+				.orElseThrow(() -> new OrderNotFound("Pedido nao encontrado pelo ticketId " + ticketId));
 	}
 
 	public Order update(Integer orderId, UpdateOrderDTO dto) {

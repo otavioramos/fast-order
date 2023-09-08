@@ -1,9 +1,9 @@
 package br.com.otavio.fastorder.service;
 
-import org.springframework.stereotype.Service;
-
 import br.com.otavio.fastorder.model.entity.OrderProduct;
+import br.com.otavio.fastorder.model.exception.ProductNotFound;
 import br.com.otavio.fastorder.repository.OrderProductRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class OrderProductService {
 
 	public OrderProduct getById(Integer id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Produto nao encontrado"));
+				.orElseThrow(() -> new ProductNotFound("Produto nao encontrado pelo id " + id));
 	}
 
 	public List<OrderProduct> getAll() {
