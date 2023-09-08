@@ -14,9 +14,6 @@ public class OrderTicket {
     @SequenceGenerator(name = "order_ticket_sq", sequenceName = "fast_order.order_ticket_sequence", allocationSize = 1)
     private Integer id;
 
-    @Column(name = "ticket_number", nullable = false, length = 5)
-    private Integer ticketNumber;
-
     @Column(name = "issue_time", nullable = false)
     private LocalDateTime issueTime;
 
@@ -24,9 +21,8 @@ public class OrderTicket {
     @JsonIgnore
     private Order order;
 
-    public OrderTicket(Integer id, Integer ticketNumber, LocalDateTime issueTime, LocalDateTime expirationTime, Order order) {
+    public OrderTicket(Integer id, LocalDateTime issueTime, Order order) {
         this.id = id;
-        this.ticketNumber = ticketNumber;
         this.issueTime = issueTime;
         this.order = order;
     }
@@ -40,14 +36,6 @@ public class OrderTicket {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getTicketNumber() {
-        return ticketNumber;
-    }
-
-    public void setTicketNumber(Integer ticketNumber) {
-        this.ticketNumber = ticketNumber;
     }
 
     public LocalDateTime getIssueTime() {
@@ -71,20 +59,20 @@ public class OrderTicket {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderTicket that = (OrderTicket) o;
-        return Objects.equals(id, that.id) && Objects.equals(ticketNumber, that.ticketNumber) && Objects.equals(issueTime, that.issueTime) && Objects.equals(order, that.order);
+        return Objects.equals(id, that.id) && Objects.equals(issueTime, that.issueTime) && Objects.equals(order, that.order);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, ticketNumber, issueTime, order);
+        return Objects.hash(id, issueTime, order);
     }
 
     @Override
     public String toString() {
         return "OrderTicket{" +
                 "id=" + id +
-                ", ticketNumber=" + ticketNumber +
                 ", issueTime=" + issueTime +
+                ", order=" + order +
                 '}';
     }
 }

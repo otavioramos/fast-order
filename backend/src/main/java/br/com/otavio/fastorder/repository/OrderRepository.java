@@ -12,7 +12,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query("select o " +
             "from order o " +
-            "where o.orderTicket.ticketNumber = :ticketNumber " +
-            "and DATE(o.orderTicket.issueTime) = CURRENT_DATE")
-    Optional<Order> getOrderByTicketNumber(@Param("ticketNumber") Integer ticketNumber);
+            "where o.orderTicket.id = :ticketId")
+    Optional<Order> getOrderByTicketId(@Param("ticketId") Integer ticketId);
 }

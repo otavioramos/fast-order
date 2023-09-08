@@ -1,16 +1,17 @@
 package br.com.otavio.fastorder.service;
 
+import br.com.otavio.fastorder.model.dto.CreateOrderDTO;
 import br.com.otavio.fastorder.model.dto.UpdateOrderDTO;
+import br.com.otavio.fastorder.model.entity.Order;
+import br.com.otavio.fastorder.model.entity.OrderItem;
 import br.com.otavio.fastorder.model.entity.OrderTicket;
 import br.com.otavio.fastorder.model.entity.enums.OrderStatusDescription;
 import br.com.otavio.fastorder.model.mapper.OrderMapper;
-import br.com.otavio.fastorder.model.dto.CreateOrderDTO;
-import br.com.otavio.fastorder.model.entity.Order;
-import br.com.otavio.fastorder.model.entity.OrderItem;
 import br.com.otavio.fastorder.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,15 +20,15 @@ public class OrderService {
 	private final OrderRepository repository;
 	private final OrderItemService orderItemService;
 	private final OrderStatusService orderStatusService;
-	private final OrderTicketService orderTicketService;
 	private static final OrderMapper ORDER_MAPPER = new OrderMapper();
 
-	public OrderService(OrderRepository repository, OrderItemService orderItemService, OrderStatusService orderStatusService, OrderTicketService orderTicketService) {
+	public OrderService(OrderRepository repository,
+						OrderItemService orderItemService,
+						OrderStatusService orderStatusService) {
 		super();
 		this.repository = repository;
 		this.orderItemService = orderItemService;
 		this.orderStatusService = orderStatusService;
-		this.orderTicketService = orderTicketService;
 	}
 	
 	public Order save(CreateOrderDTO orderDTO) {
@@ -39,8 +40,9 @@ public class OrderService {
 		BigDecimal total = this.orderItemService.getTotal(order.getItems());
 		order.getPayment().setTotal(total);
 
-		OrderTicket ticket = orderTicketService.generate();
+		OrderTicket ticket = new OrderTicket();
 		ticket.setOrder(order);
+		ticket.setIssueTime(LocalDateTime.now());
 		order.setOrderTicket(ticket);
 
 		Integer totalMinutesToPrepare = this.orderStatusService.getTotalMinutesToPrepare(order.getItems());
@@ -58,8 +60,8 @@ public class OrderService {
 				.orElseThrow(() -> new RuntimeException("Pedido nao encontrado"));
 	}
 
-	public Order getByTicket(Integer ticketNumber) {
-		return repository.getOrderByTicketNumber(ticketNumber)
+	public Order getByTicket(Integer ticketId) {
+		return repository.getOrderByTicketId(ticketId)
 				.orElseThrow(() -> new RuntimeException("Pedido nao encontrado"));
 	}
 
