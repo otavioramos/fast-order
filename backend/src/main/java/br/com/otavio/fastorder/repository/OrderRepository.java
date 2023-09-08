@@ -10,8 +10,6 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-    @Query("select o " +
-            "from order o " +
-            "where o.orderTicket.id = :ticketId")
+    @Query("select o from order o where o.orderTicket.id = :ticketId")
     Optional<Order> getOrderByTicketId(@Param("ticketId") Integer ticketId);
 }
