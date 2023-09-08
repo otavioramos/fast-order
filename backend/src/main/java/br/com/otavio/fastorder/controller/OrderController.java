@@ -9,6 +9,7 @@ import br.com.otavio.fastorder.model.entity.OrderTicket;
 import br.com.otavio.fastorder.service.OrderService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -27,8 +28,12 @@ public class OrderController {
 	}
 
 	@GetMapping
-	public List<Order> getAll() {
-		return service.getAll();
+	public List<Order> get(
+			@RequestParam(value = "ticket", required = false) Integer ticketNumber) {
+		if (ticketNumber != null)
+			return Collections.singletonList(service.getByTicket(ticketNumber));
+		else
+			return service.getAll();
 	}
 
 	@GetMapping("/{id}")

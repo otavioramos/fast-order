@@ -58,6 +58,11 @@ public class OrderService {
 				.orElseThrow(() -> new RuntimeException("Pedido nao encontrado"));
 	}
 
+	public Order getByTicket(Integer ticketNumber) {
+		return repository.getOrderByTicketNumber(ticketNumber)
+				.orElseThrow(() -> new RuntimeException("Pedido nao encontrado"));
+	}
+
 	public Order update(Integer orderId, UpdateOrderDTO dto) {
 		var order = this.getById(orderId);
 
