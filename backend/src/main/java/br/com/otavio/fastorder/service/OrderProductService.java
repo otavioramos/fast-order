@@ -13,7 +13,6 @@ public class OrderProductService {
 	private final OrderProductRepository repository;
 
 	public OrderProductService(OrderProductRepository repository) {
-		super();
 		this.repository = repository;
 	}
 	
@@ -26,7 +25,16 @@ public class OrderProductService {
 				.orElseThrow(() -> new ProductNotFound("Produto nao encontrado pelo id " + id));
 	}
 
+	public OrderProduct getByName(String name) {
+		return repository.findByName(name)
+				.orElseThrow(() -> new ProductNotFound("Produto nao encontrado pelo nome " + name));
+	}
+
 	public List<OrderProduct> getAll() {
 		return repository.findAll();
+	}
+
+	public void deleteById(Integer id) {
+		repository.deleteById(id);
 	}
 }

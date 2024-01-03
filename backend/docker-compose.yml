@@ -1,7 +1,7 @@
 version: "3"
 services:
   postgres:
-    image: postgres:alpine
+    image: postgres:15-alpine
     environment:
       POSTGRES_USER: fastorder
       POSTGRES_PASSWORD: password5786
