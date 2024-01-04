@@ -2,10 +2,9 @@ package br.com.otavio.fastorder.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
-
-import javax.persistence.*;
 
 @Entity(name = "orderItem")
 @Table(name = "order_item", schema = "fast_order")
@@ -16,7 +15,7 @@ public class OrderItem {
 	@SequenceGenerator(name = "order_item_sq", sequenceName = "fast_order.order_item_sequence", allocationSize = 1)
 	private Integer id;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinColumn(name = "order_product_id", referencedColumnName = "id", nullable = false)
 	private OrderProduct product;
 

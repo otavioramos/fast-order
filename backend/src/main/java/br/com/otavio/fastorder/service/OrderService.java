@@ -11,6 +11,7 @@ import br.com.otavio.fastorder.model.mapper.OrderMapper;
 import br.com.otavio.fastorder.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,7 +32,7 @@ public class OrderService {
 		this.orderItemService = orderItemService;
 		this.orderStatusService = orderStatusService;
 	}
-	
+
 	public Order save(CreateOrderDTO orderDTO) {
 		var order = ORDER_MAPPER.apply(orderDTO);
 		List<OrderItem> items = orderItemService.loadItems(orderDTO.items());
@@ -73,5 +74,9 @@ public class OrderService {
 		order.getOrderStatus().setCurrentStatus(desiredStatus);
 
 		return repository.save(order);
+	}
+
+	public void deleteById(Integer id) {
+		repository.deleteById(id);
 	}
 }
