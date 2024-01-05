@@ -1,5 +1,19 @@
 version: "3"
 services:
+  fast-order-backend:
+    build: .
+    container_name: fast-order-backend
+    ports:
+      - "8083:8083"
+    environment:
+      DB_URL: "jdbc:postgresql://postgres:5432/fastorder"
+      DB_USER: fastorder
+      DB_PASSWORD: password5786
+    networks:
+      - keycloak-network
+    depends_on:
+      - postgres
+      - keycloak
   postgres:
     image: postgres:15-alpine
     environment:

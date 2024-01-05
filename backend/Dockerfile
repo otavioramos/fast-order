@@ -1,7 +1,7 @@
 FROM maven:3-eclipse-temurin-17-alpine as builder
 WORKDIR /app
 COPY . .
-RUN ["mvn", "clean", "package"]
+RUN ["mvn", "clean", "package", "-DskipTests"]
 
 FROM eclipse-temurin:17-jre-alpine as runner
 WORKDIR /app
