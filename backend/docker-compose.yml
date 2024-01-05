@@ -9,3 +9,26 @@ services:
       - /var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - keycloak-network
+  keycloak:
+    image: jboss/keycloak:16.1.1
+    environment:
+      DB_ADDR: postgres
+      DB_USER: fastorder
+      DB_PASSWORD: password5786
+      DB_VENDOR: postgres
+      DB_PORT: 5432
+      DB_DATABASE: fastorder
+      DB_SCHEMA: keycloak
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak123
+    ports:
+      - "8180:8080"
+    depends_on:
+      - postgres
+    networks:
+      - keycloak-network
+networks:
+  keycloak-network:
+    driver: bridge
